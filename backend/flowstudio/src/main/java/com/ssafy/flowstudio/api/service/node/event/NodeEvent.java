@@ -2,6 +2,7 @@ package com.ssafy.flowstudio.api.service.node.event;
 
 import com.ssafy.flowstudio.domain.chat.entity.Chat;
 import com.ssafy.flowstudio.domain.node.entity.Node;
+import lombok.Builder;
 import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
 
@@ -10,9 +11,18 @@ public class NodeEvent extends ApplicationEvent {
     private final Node targetNode;
     private final Chat chat;
 
-    public NodeEvent(Object source, Node targetNode, Chat chat) {
+    @Builder
+    private NodeEvent(Object source, Node targetNode, Chat chat) {
         super(source);
         this.targetNode = targetNode;
         this.chat = chat;
     }
+
+    public static NodeEvent of(Node targetNode, Chat chat) {
+        return NodeEvent.builder()
+                .targetNode(targetNode)
+                .chat(chat)
+                .build();
+    }
+
 }
