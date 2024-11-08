@@ -66,7 +66,7 @@ export default function UserProfile() {
       queryClient.invalidateQueries({ queryKey: ["profileImage"] });
       if (previewImage) {
         URL.revokeObjectURL(previewImage);
-        setPreviewImage(null);
+        setPreviewImage(previewImage);
         setIsEditing(false)
       }
     },
@@ -136,11 +136,11 @@ export default function UserProfile() {
       alert("닉네임 중복 확인을 시도해 주세요.")
     }
 
-    // 프로필 이미지 수정
+    // 프로필 이미지 수정    
     if (profileImage instanceof File) {
-      updateProfileImage.mutate(profileImage)
-      setProfileImage(null)
+      updateProfileImage.mutate(profileImage);
     }
+
 
     // api key 수정
     if (apiKeys?.claudeKey !== claude || apiKeys.clovaKey !== clova || apiKeys.geminiKey !== gemini || apiKeys.openAiKey !== openAi) {
