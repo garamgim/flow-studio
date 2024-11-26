@@ -11,12 +11,14 @@ import { getSharedChatFlows } from "@/api/share";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import Loading from "@/components/common/Loading";
 import { categories } from "@/constants/chatbotCategories";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
   const [selectedCategory, setSelectedCategory] = useState<string>("모든 챗봇");
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [activeSlide, setActiveSlide] = useState<number>(0);
   const [isCategoryFixed, setIsCategoryFixed] = useState<boolean>(false); 
+  const router = useRouter();
 
   const {
     data,
@@ -143,6 +145,10 @@ export default function Page() {
               type="all"
               authorNickName={chatbot.author.nickname}
               authorProfile={chatbot.author.profileImage}
+              onCardClick={() => {
+                router.push(`/chatbot/${chatbot.chatFlowId}/chatflow?isEditable=false`);
+  
+              }}
               shareNum={chatbot.shareCount}
               category={chatbot.categories.map((cat) => cat.name)}
             />
@@ -199,6 +205,10 @@ export default function Page() {
               iconId={bot.thumbnail}
               authorNickName={bot.author.nickname}
               authorProfile={bot.author.profileImage}
+              onCardClick={() => {
+                router.push(`/chatbot/${bot.chatFlowId}/chatflow?isEditable=false`);
+  
+              }}
               shareNum={bot.shareCount}
               category={bot.categories.map((cat) => cat.name)}
               type="all"
